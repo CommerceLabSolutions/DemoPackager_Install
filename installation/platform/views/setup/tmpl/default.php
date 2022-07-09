@@ -103,7 +103,7 @@ echo $this->loadAnyTemplate('steps/steps', ['helpurl' => 'https://www.akeeba.com
 						<?php echo AText::_('SETUP_LABEL_SUPERUSERPASSWORD'); ?>
 					</div>
 					<div class="uk-width-1-2">
-						<input class="uk-input uk-width-1-1" type="password" id="superuserpassword" name="superuserpassword" value="" />
+						<input class="uk-input uk-width-1-1" type="password" min="8" id="superuserpassword" name="superuserpassword" value="" />
 					</div>
 					<span class="akeeba-help-text" style="display: none">
 						<?php echo AText::_('SETUP_LABEL_SUPERUSERPASSWORD_HELP2') ?>
@@ -114,7 +114,7 @@ echo $this->loadAnyTemplate('steps/steps', ['helpurl' => 'https://www.akeeba.com
 						<?php echo AText::_('SETUP_LABEL_SUPERUSERPASSWORDREPEAT'); ?>
 					</div>
 					<div class="uk-width-1-2">
-						<input class="uk-input uk-width-1-1" type="password" id="superuserpasswordrepeat" name="superuserpasswordrepeat" value="" />
+						<input class="uk-input uk-width-1-1" type="password" min="8" id="superuserpasswordrepeat" name="superuserpasswordrepeat" value="" />
 					</div>
 					<span class="akeeba-help-text" style="display: none">
 						<?php echo AText::_('SETUP_LABEL_SUPERUSERPASSWORDREPEAT_HELP') ?>

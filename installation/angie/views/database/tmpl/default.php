@@ -216,7 +216,7 @@ echo $this->loadAnyTemplate('steps/steps', array('helpurl' => 'https://www.akeeb
                         <?php echo AText::_('DATABASE_LBL_HOSTNAME') ?>
                     </div>
                     <div class="uk-width-1-2">
-                        <input class="uk-input uk-width-1-1" type="text" id="dbhost" placeholder="localhost" value="<?php echo $this->db->dbhost ?>" />
+                        <input class="uk-input uk-width-1-1" type="text" id="dbhost" default="localhost" placeholder="localhost" value="localhost" />
                     </div>
                     <span class="akeeba-help-text" style="display: none">
                         <?php echo AText::_('DATABASE_LBL_HOSTNAME_HELP') ?>
