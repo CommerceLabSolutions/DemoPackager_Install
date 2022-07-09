@@ -62,6 +62,7 @@ body > div {
 
 .akeeba-block--warning,
 .akeeba-block--failure,
+.akeeba-block--alert-failure,
 .akeeba-block--success {
     background: transparent !important;
 }

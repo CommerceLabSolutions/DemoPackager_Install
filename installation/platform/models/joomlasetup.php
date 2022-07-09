@@ -568,20 +568,21 @@ class AngieModelJoomlaSetup extends AngieModelBaseSetup
 
 		
 
-		// Remove ComCloud
-		$query = $db->getQuery(true);
+		// // Remove ComCloud
+		// $query = $db->getQuery(true);
 
-		// delete all custom keys for user 1001.
-		$conditions = array(
-		    $db->quoteName('username') . ' = ' . $db->q('comcloud')
-		);
+		// // delete all custom keys for user 1001.
+		// $conditions = array(
+		//     $db->quoteName('username') . ' = ' . $db->q('comcloud')
+		// );
 
-		$query->delete($db->quoteName('#__users'));
-		$query->where($conditions);
+		// $query->delete($db->quoteName('#__users'));
+		// $query->where($conditions);
 
-		$db->setQuery($query);
+		// $db->setQuery($query);
 
-		return $db->execute();
+		// return $db->execute();
+		return true;
 	}
 
 	private function genRandomPassword($length = 8)
