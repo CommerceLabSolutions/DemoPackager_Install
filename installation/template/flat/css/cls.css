@@ -1,0 +1,71 @@
+.akeeba-block--info,
+.breadcrumb,
+#akeeba-footer,
+#startover,
+#checkagain,
+#btnSkip,
+#btnPrev,
+#akeeba-nav-logo {
+	display: none;
+}
+
+body {
+	background-image: url(../image/moiunt.jpeg);
+    background-attachment: fixed;
+    backface-visibility: hidden;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+}
+body > div {
+    background-color: rgba(17, 8, 31, 0.79);
+}
+
+.akeeba-renderer-fef .akeeba-navbar {
+    background: #231d3f;
+    border-bottom: 0px;
+}
+
+#btnNext {
+	background-color: rgb(53, 206, 194);
+	color: #231d3f;
+	border: 0px;
+}
+
+.akeeba-renderer-fef .akeeba-navbar nav {
+    display: block;
+    justify-content: flex-end;
+}
+
+.well img {
+	width: 110px;
+}
+
+.akeeba-renderer-fef .uk-container {
+	margin:  0 auto;
+}
+
+.akeeba-renderer-fef .akeeba-progress {
+    background: #130e2e;
+    border: 0px;
+    border-radius: 20px;
+}
+
+.akeeba-renderer-fef .akeeba-progress [class*=akeeba-progress-fill] {
+    border-radius: 20px;
+    background: #f6b300;
+}
+
+.akeeba-renderer-fef .akeeba-progress .akeeba-progress-status {
+    color: white;
+}
+
+.akeeba-block--warning,
+.akeeba-block--failure,
+.akeeba-block--success {
+    background: transparent !important;
+}
+
+#akeeba-modal-container {
+    background: #231d3f;
+}
