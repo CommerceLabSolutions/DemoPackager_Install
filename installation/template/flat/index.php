@@ -12,7 +12,7 @@ defined('_AKEEBA') or die();
 ?>
 <html>
 <head>
-	<title>Akeeba Backup Site Restoration Script v. <?php echo AKEEBA_VERSION ?></title>
+	<title>CommerceLab Shop Demo Installer</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <?php include __DIR__ . '/php/head.php' ?>
@@ -43,8 +43,7 @@ defined('_AKEEBA') or die();
                 <a href="#" style="display: none;">
                     <span class="aklogo-deluxe-j"></span>
                     <span class="akeeba-product-name">
-                        Akeeba Backup Site Restoration Script
-                        <span class="akeeba-label--red--small">v.<?php echo AKEEBA_VERSION ?></span>
+                        CommerceLab Shop Demo Installer
                     </span>
                 </a>
                 <a href="#" class="akeeba-menu-button akeeba-hidden-desktop akeeba-hidden-tablet" id="mobileMenuToggler"

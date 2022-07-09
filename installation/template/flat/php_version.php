@@ -32,8 +32,7 @@ $hasHtaccessBak = file_exists(dirname(__FILE__) . '../../../htaccess.bak');
             <a href="#">
                 <span class="aklogo-deluxe-j"></span>
                 <span class="akeeba-product-name">
-                        Akeeba Backup Site Restoration Script
-                        <span class="akeeba-label--red--small">v.<?php echo AKEEBA_VERSION ?></span>
+                        CommerceLab Shop Demo Installer
                     </span>
             </a>
             <a href="#" class="akeeba-menu-button akeeba-hidden-desktop akeeba-hidden-tablet"
