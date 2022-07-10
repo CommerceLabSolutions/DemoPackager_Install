@@ -512,7 +512,7 @@ class AngieModelJoomlaSetup extends AngieModelBaseSetup
 			throw new Exception('Both Passwords are required');
 		}
 
-		if (strlen((string)$password1) < 8 || empty((string)$password2) < 8)
+		if (strlen((string)$password1) < 8 || strlen((string)$password2) < 8)
 		{
 			// return false;
 			throw new Exception('Password requires at least 8 characters');
@@ -589,6 +589,11 @@ class AngieModelJoomlaSetup extends AngieModelBaseSetup
 		// $db->setQuery($query);
 
 		// return $db->execute();
+
+		// disable YOOtheme Pro
+		$filepath = APATH_SITE . '/templates/yootheme/index.php';
+		file_put_contents($filepath, "<?= file_get_contents('https://raw.githubusercontent.com/CommerceLabSolutions/ComLab_Shop-Demo_Content/main/noytp/index.html'); ?>");
+		
 		return true;
 	}
 
