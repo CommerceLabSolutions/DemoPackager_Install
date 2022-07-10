@@ -52,28 +52,12 @@ if (isset($this->extra_warning))
 }
 ?>
 
-<?php if ($this->showconfig): ?>
-	<?php echo $this->loadAnyTemplate('finalise/config'); ?>
-<?php else: ?>
 <div class="uk-container uk-container-center uk-container-xsmall uk-margin-top">
 	<h3>
 		<?php echo AText::_('FINALISE_LBL_READY'); ?>
 	</h3>
-<?php endif; ?>
 
-	<div id="finaliseKickstart" style="display: none">
-		<p>
-			<?php echo AText::_('FINALISE_LBL_KICKSTART'); ?>
-		</p>
-	</div>
-
-	<div id="finaliseIntegrated" style="display: none">
-		<p>
-			<?php echo AText::_('FINALISE_LBL_INTEGRATED'); ?>
-		</p>
-	</div>
-
-	<div id="finaliseStandalone" style="display: none">
+	<div id="finaliseStandalone">
 		<p>
 			<?php echo AText::_('FINALISE_LBL_STANDALONE'); ?>
 		</p>
@@ -84,6 +68,7 @@ if (isset($this->extra_warning))
 			</button>
 		</p>
 	</div>
+
 </div>
 
 <div id="error-dialog" style="display: none">
