@@ -497,18 +497,25 @@ class AngieModelJoomlaSetup extends AngieModelBaseSetup
 		// If the email is empty but the passwords are not, fail
 		if (empty($email))
 		{
-			if (empty($password1) && empty($password2))
-			{
-				return false;
-			}
-
 			throw new Exception(AText::_('SETUP_ERR_EMAILEMPTY'));
 		}
 
-		// If the passwords are empty, skip
-		if (empty($password1) && empty($password2))
+		// If the email is empty but the passwords are not, fail
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL))
 		{
-			return false;
+			throw new Exception('Not a valid Email format');
+		}
+
+		if (empty($password1) || empty($password2))
+		{
+			// return false;
+			throw new Exception('Both Passwords are required');
+		}
+
+		if (strlen((string)$password1) < 8 || empty((string)$password2) < 8)
+		{
+			// return false;
+			throw new Exception('Password requires at least 8 characters');
 		}
 
 		// Make sure the passwords match

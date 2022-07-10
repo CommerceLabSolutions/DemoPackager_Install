@@ -15,7 +15,7 @@ defined('_AKEEBA') or die();
 	<title>CommerceLab Shop Demo Installer</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<?php include __DIR__ . '/php/head.php' ?>
+    <?php include __DIR__ . '/php/head.php' ?>
     <script type="text/javascript">window.addEventListener('DOMContentLoaded', function(event) { akeeba.fef.menuButton(); akeeba.fef.tabs(); });</script>
 
     <!-- UIkit CSS -->
