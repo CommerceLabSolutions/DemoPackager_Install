@@ -20,7 +20,15 @@ body {
 body > div {
     background-color: rgba(76, 17, 100, 0.78);
 }
-
+#mainContent {
+    padding-top: 100px;
+}
+.akeeba-navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
 .akeeba-renderer-fef .akeeba-navbar {
     background: #231d3f;
     border-bottom: 0px;

@@ -490,9 +490,18 @@ class AngieModelJoomlaSetup extends AngieModelBaseSetup
 		// }
 
 		// Get the Super User email and password
-		$email     = $this->getState('superuseremail', '');
-		$password1 = $this->getState('superuserpassword', '');
-		$password2 = $this->getState('superuserpasswordrepeat', '');
+		$email         = $this->getState('superuseremail', '');
+		$watchful_key  = $this->getState('hidden_watchful_key', '');
+		$allow_ytp     = $this->getState('allow_ytp', '0');
+		$superusername = $this->getState('superusername', '');
+		$password1     = $this->getState('superuserpassword', '');
+		$password2     = $this->getState('superuserpasswordrepeat', '');
+
+		// If the email is empty but the passwords are not, fail
+		if (empty($superusername))
+		{
+			throw new Exception('Name is Required');
+		}
 
 		// If the email is empty but the passwords are not, fail
 		if (empty($email))
@@ -546,6 +555,46 @@ class AngieModelJoomlaSetup extends AngieModelBaseSetup
 			$cryptpass = password_hash($password1, PASSWORD_BCRYPT, ['cost' => 10]);
 		}
 
+
+		// Add Watchful Key to component Params
+		// subscription_key\"\:".*?\"
+
+		$query = $db->getQuery(true)
+			->select($db->quoteName('params'))
+			->from($db->quoteName('#__extensions'))
+			->where($db->quoteName('element') . ' = ' . $db->quote('com_commercelab_shop'));
+
+		$params = @json_decode($db->setQuery($query)->loadResult(), true);
+		$params['subscription_key'] = $watchful_key;
+
+
+
+		// $pattern     = '/subscription_key\"\:\".*?\"/i';
+		// $replacement = $watchful_key;
+
+		// $new_params = preg_replace($pattern, $replacement, $string);
+
+
+		$query = $db->getQuery(true);
+
+		// Fields to update.
+		$fields = array(
+		    $db->quoteName('params') . ' = ' . $db->quote(json_encode($params))
+		);
+
+		// Conditions for which records should be updated.
+		$conditions = array(
+		    $db->quoteName('element') . ' = ' . $db->quote('com_commercelab_shop')
+		);
+
+		$query->update($db->quoteName('#__extensions'))->set($fields)->where($conditions);
+
+		$db->setQuery($query);
+		$db->execute();
+
+
+		// 'subscription_key'
+
 		// Update the database record
 		// $query = $db->getQuery(true)
 		// 	->update($db->qn('#__users'))
@@ -560,20 +609,36 @@ class AngieModelJoomlaSetup extends AngieModelBaseSetup
 		$object->password     = $cryptpass;
 		$object->email        = $email;
 		$object->username     = $email;
+		$object->name         = $superusername;
 		$object->block        = 0;
 		$object->activation   = 0;
 		$object->registerDate = new DateTime();
 
 		$db->insertObject('#__users', $object);
+		$new_admin_id = (int) $db->insertid();
 
 		// Set it as SuperUser
+
 		$object           = new stdClass();
-		$object->user_id  = (int) $db->insertid();
+		$object->user_id  = $new_admin_id;
 		$object->group_id = 8;
 
 		$db->insertObject('#__user_usergroup_map', $object);
 
 		
+		// Assing items to new SuperUser
+		$query = $db->getQuery(true);
+
+		// Fields to update.
+		$fields = array(
+		    $db->quoteName('created_by') . ' = '. $new_admin_id
+		);
+
+		$query->update($db->quoteName('#__content'))->set($fields);
+
+		$db->setQuery($query);
+
+		$result = $db->execute();
 
 		// // Remove ComCloud
 		// $query = $db->getQuery(true);
@@ -591,6 +656,10 @@ class AngieModelJoomlaSetup extends AngieModelBaseSetup
 		// return $db->execute();
 
 		// disable YOOtheme Pro
+		if ($allow_ytp == '1')
+		{
+			return true;
+		}
 		$filepath = APATH_SITE . '/templates/yootheme/index.php';
 		file_put_contents($filepath, "<?= file_get_contents('https://raw.githubusercontent.com/CommerceLabSolutions/ComLab_Shop-Demo_Content/main/noytp/index.html'); ?>");
 		

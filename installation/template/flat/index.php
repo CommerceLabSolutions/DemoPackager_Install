@@ -15,7 +15,10 @@ defined('_AKEEBA') or die();
 	<title>CommerceLab Shop Demo Installer</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="icon" type="image/x-icon" href="template/flat/favicon.ico">
+
     <?php include __DIR__ . '/php/head.php' ?>
+
     <script type="text/javascript">window.addEventListener('DOMContentLoaded', function(event) { akeeba.fef.menuButton(); akeeba.fef.tabs(); });</script>
 
     <!-- UIkit CSS -->
@@ -28,8 +31,8 @@ defined('_AKEEBA') or die();
 	<link rel="stylesheet" type="text/css" href="template/flat/css/cls.css">
 
 </head>
-<body class="akeeba-renderer-fef uk-light">
-<div style="width:100%; height:100%">
+<body class="akeeba-renderer-fef uk-light" style="min-height: 100%;">
+<div style="min-height: 100%;">
     
 <!--[if IE]><div class="ie9"><![endif]-->
 

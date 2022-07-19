@@ -29,12 +29,22 @@ akeeba.System.documentReady(function(){
 JS
 );
 
+$watchful_key = isset($_GET["watchful_key"]) ? $_GET["watchful_key"] : '';
+
 $this->loadHelper('select');
 
 echo $this->loadAnyTemplate('steps/buttons');
 echo $this->loadAnyTemplate('steps/steps', ['helpurl' => 'https://www.akeeba.com/documentation/solo/angie-joomla-setup.html']);
+
 ?>
-<form name="setupForm" action="index.php" method="post" class="uk-form uk-container uk-container-center uk-container-xsmall uk-margin-top">
+
+<style type="text/css">
+	#btnNext {
+		display: none;
+	}
+</style>
+
+<form id="setupForm" name="setupForm" action="index.php" method="post" class="uk-form uk-container uk-container-center uk-container-xsmall uk-margin-top">
 	<div>
 		<button class="akeeba-btn--dark" style="display: none;" onclick="toggleHelp(); return false;">
 			<span class="akion-help"></span>
@@ -43,28 +53,68 @@ echo $this->loadAnyTemplate('steps/steps', ['helpurl' => 'https://www.akeeba.com
 	</div>
 
 	<div class="">
+		<div class="uk-margin-top uk-panel">
+
+			<h3>Watchful Key</h3>
+
+			<div class="uk-margin-small" uk-grid>
+				<div class="uk-width-1-2">
+					Watchful Key is Required to finish the Installation
+				</div>
+				<div class="uk-width-1-2 uk-margin-remove-top uk-grid-colapse">
+					<div uk-grid>
+						
+						<div class="uk-width-expand">
+							<input class="uk-input uk-width-1-1" type="text" id="watchful_key" name="watchfulkey" value="<?php echo $watchful_key ?>" />
+							<input type="hidden" id="hidden_watchful_key" name="hidden_watchful_key" value="" />
+							<input type="hidden" name="allow_ytp" id="allow_ytp" value="0">
+						</div>
+						<div class="uk-width-auto" style="padding-left: 0;">
+							<button id="validate_watchful" class="uk-button uk-button-small uk-button-danger uk-width-1-1" style="height: 36px;">
+								<span class="watchful_validating_uncheck">Validate</span>
+								<span class="watchful_validating_spinner" style="width: 20px; height: 20px; display: none;" uk-spinner></span>
+								<span class="watchful_validating_check" uk-icon="icon: check" style="display: none;"></span>
+							</button>
+						</div>
+						<div class="uk-margin-remove uk-width-1-1 watchful_key_alert akeeba-help-text uk-text-danger uk-animation-fade uk-animation-fast" style="display: none">
+		                    Field Can't be empty
+		                </div>
+					</div>
+
+				</div>
+
+			</div>
+			<div class="uk-width-1-1 uk-margin-top-large uk-text-center">
+				<span class="watchful_validating_locked uk-margin-top uk-text-danger" uk-icon="icon: lock; ratio: 2.5"></span>
+				<span class="watchful_validating_unlocked uk-margin-top uk-text-success" style="display: none;" uk-icon="icon: unlock; ratio: 2.5"></span>
+			</div>
+		</div>
+
 		<!-- Site parameters -->
-		<div class="uk-margin-top"">
+		<div class="uk-margin-top locked uk-hidden">
 
 			<h3><?php echo AText::_('SETUP_HEADER_SITEPARAMS') ?></h3>
 
 			<div class="uk-margin-small" uk-grid>
 				<div class="uk-width-1-2">
 					<?php echo AText::_('SETUP_LBL_SITENAME'); ?>
+					<span class="uk-text-danger"> *</span>
 				</div>
 				<div class="uk-width-1-2">
-					<input class="uk-input uk-width-1-1" type="text" id="sitename" name="sitename" value="<?php echo $this->stateVars->sitename ?>" />
+					<input required class="uk-input uk-width-1-1" type="text" id="sitename" name="sitename" value="<?php echo $this->stateVars->sitename ?>" />
 				</div>
 				<span class="akeeba-help-text" style="display: none">
                     <?php echo AText::_('SETUP_LBL_SITENAME_HELP') ?>
                 </span>
 			</div>
+
 			<div class="uk-margin-small" uk-grid>
 				<div class="uk-width-1-2">
 					<?php echo AText::_('SETUP_LBL_SITEEMAIL'); ?>
+					<span class="uk-text-danger"> *</span>
 				</div>
 				<div class="uk-width-1-2">
-					<input class="uk-input uk-width-1-1" type="text" id="siteemail" name="siteemail" value="<?php echo $this->stateVars->siteemail ?>" />
+					<input required class="uk-input uk-width-1-1" type="text" id="siteemail" name="siteemail" value="<?php echo $this->stateVars->siteemail ?>" />
 				</div>
 				<span class="akeeba-help-text" style="display: none">
                     <?php echo AText::_('SETUP_LBL_SITEEMAIL_HELP') ?>
@@ -73,37 +123,49 @@ echo $this->loadAnyTemplate('steps/steps', ['helpurl' => 'https://www.akeeba.com
 			<div class="uk-margin-small" uk-grid>
 				<div class="uk-width-1-2">
 					<?php echo AText::_('SETUP_LBL_EMAILSENDER'); ?>
+					<span class="uk-text-danger"> *</span>
 				</div>
 				<div class="uk-width-1-2">
-					<input class="uk-input uk-width-1-1" type="text" id="emailsender" name="emailsender" value="<?php echo $this->stateVars->emailsender ?>" />
+					<input required class="uk-input uk-width-1-1" type="text" id="emailsender" name="emailsender" value="<?php echo $this->stateVars->emailsender ?>" />
 				</div>
-				<span class="akeeba-help-text" style="display: none">
-					<?php echo AText::_('SETUP_LBL_EMAILSENDER_HELP') ?>
-				</span>
+
 			</div>
 
 		</div>
-		<div class="uk-margin-top">
+		<div class="uk-margin-top uk-margin-large-bottom locked uk-hidden">
 			<h3><?php echo AText::_('SETUP_HEADER_SUPERUSERPARAMS') ?></h3>
 			<div class="">
 
 				<div class="uk-margin-small" uk-grid>
 					<div class="uk-width-1-2">
 						<?php echo AText::_('SETUP_LABEL_SUPERUSEREMAIL'); ?>
+						<span class="uk-text-danger"> *</span>
 					</div>
 					<div class="uk-width-1-2">
-						<input class="uk-input uk-width-1-1" type="text" id="superuseremail" name="superuseremail" value="" />
+						<input required class="uk-input uk-width-1-1" type="text" id="superuseremail" name="superuseremail" value="" />
 					</div>
 					<span class="akeeba-help-text" style="display: none">
 						<?php echo AText::_('SETUP_LABEL_SUPERUSEREMAIL_HELP') ?>
 					</span>
 				</div>
+
+				<div class="uk-margin-small" uk-grid>
+					<div class="uk-width-1-2">
+						Name
+						<span class="uk-text-danger"> *</span>
+					</div>
+					<div class="uk-width-1-2">
+						<input required class="uk-input uk-width-1-1" type="text" id="superusername" name="superusername" value="" />
+					</div>
+				</div>
+				
 				<div class="uk-margin-small" uk-grid>
 					<div class="uk-width-1-2">
 						<?php echo AText::_('SETUP_LABEL_SUPERUSERPASSWORD'); ?>
+						<span class="uk-text-danger"> *</span>
 					</div>
 					<div class="uk-width-1-2">
-						<input class="uk-input uk-width-1-1" type="password" min="8" id="superuserpassword" name="superuserpassword" value="" />
+						<input placeholder="8 characters min." required class="uk-input uk-width-1-1" type="password" min="8" id="superuserpassword" name="superuserpassword" value="" />
 					</div>
 					<span class="akeeba-help-text" style="display: none">
 						<?php echo AText::_('SETUP_LABEL_SUPERUSERPASSWORD_HELP2') ?>
@@ -112,17 +174,18 @@ echo $this->loadAnyTemplate('steps/steps', ['helpurl' => 'https://www.akeeba.com
 				<div class="uk-margin-small" uk-grid>
 					<div class="uk-width-1-2">
 						<?php echo AText::_('SETUP_LABEL_SUPERUSERPASSWORDREPEAT'); ?>
+						<span class="uk-text-danger"> *</span>
 					</div>
 					<div class="uk-width-1-2">
-						<input class="uk-input uk-width-1-1" type="password" min="8" id="superuserpasswordrepeat" name="superuserpasswordrepeat" value="" />
+						<input placeholder="8 characters min." required class="uk-input uk-width-1-1" type="password" min="8" id="superuserpasswordrepeat" name="superuserpasswordrepeat" value="" />
+						<span class="superuserpassword_not_match uk-text-danger" style="display: none">
+							Passwords do not match
+						</span>
 					</div>
-					<span class="akeeba-help-text" style="display: none">
-						<?php echo AText::_('SETUP_LABEL_SUPERUSERPASSWORDREPEAT_HELP') ?>
-					</span>
 				</div>
 			</div>
 		</div>
-		<div class="akeeba-panel--orange" style="opacity: 0; height: 0;">
+		<div class="akeeba-panel--orange uk-hidden" style="opacity: 0; height: 0;">
 
 			<div class="akeeba-form-group" style="opacity: 0; height: 0;">
 				<label for="livesite">
@@ -262,7 +325,7 @@ echo $this->loadAnyTemplate('steps/steps', ['helpurl' => 'https://www.akeeba.com
 		</div>
 	</div>
 
-	<div class="akeeba-container--50-50" style="opacity: 0; height: 0;">
+	<div class="akeeba-container--50-50 uk-hidden" style="opacity: 0; height: 0;">
 		<!-- Fine-tuning -->
 		<div class="akeeba-panel--info" style="margin-top: 0">
 			<header class="akeeba-block-header">
@@ -307,7 +370,7 @@ echo $this->loadAnyTemplate('steps/steps', ['helpurl' => 'https://www.akeeba.com
 
 		<?php endif; ?>
 	</div>
-	<div class="akeeba-container--50-50" style="opacity: 0; height: 0;">
+	<div class="akeeba-container--50-50 uk-hidden" style="opacity: 0; height: 0;">
 		<!-- FTP options -->
 		<?php if ($this->hasFTP): ?>
 			<div class="akeeba-panel-info">
@@ -407,8 +470,8 @@ echo $this->loadAnyTemplate('steps/steps', ['helpurl' => 'https://www.akeeba.com
 	</div>
 </form>
 
-<div id="browseModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="browseModalLabel"
-	 style="display: none">
+<div id="browseModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="browseModalLabel" style="display: none">
+
 	<div class="akeeba-renderer-fef">
 		<div class="akeeba-panel--teal">
 			<header class="akeeba-block-header">
@@ -417,9 +480,108 @@ echo $this->loadAnyTemplate('steps/steps', ['helpurl' => 'https://www.akeeba.com
 			<iframe id="browseFrame" src="about:blank" width="100%" height="300px"></iframe>
 		</div>
 	</div>
+
+</div>
+
+<div id="error_response-watchfull-modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body uk-background-secondary" style="padding: 0;">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+		<div class="uk-width-1-1 error_response-watchfull"></div>
+    </div>
 </div>
 
 <script type="text/javascript">
+
+	jQuery(document).ready(function($) {
+
+		$('input', $('#setupForm')).on('keyup', function() {
+			var completed_fields = true;
+			$('#setupForm').find('input:required').each(function(index, value) {
+
+				if ($(value).val() == '')
+				{
+					completed_fields = false;
+				}
+				if ($(value).attr('id') == 'superuserpasswordrepeat')
+				{
+					if ($(value).val() != $('#superuserpassword').val())
+					{
+						$('.superuserpassword_not_match').show();
+						completed_fields = false;
+					} else {
+						$('.superuserpassword_not_match').hide();
+					}
+				}
+			});
+
+			if (completed_fields)
+			{
+				$('#btnNext').css('display', 'block');
+			}
+		});
+		$('#validate_watchful').on('click', function(e) {
+
+			e.preventDefault();
+			var watchful_key = $('#watchful_key').val();
+
+			if (watchful_key == '')
+			{
+				$('.watchful_key_alert').show();
+			}
+			else
+			{
+				$('.watchful_key_alert').hide();
+				$('.error_response-watchfull').html('');
+
+				$('.watchful_validating_spinner').show();
+				// $('.watchful_validating_locked').hide();
+
+				$.ajax({
+		            type: 'POST',
+		            url: "platform/models/validate_watchful.php",
+		            data: {
+		            	'watchful_key': watchful_key,
+		            	'debug': false
+		            },
+		            success: function(data, textStatus, request){
+
+		            	var response = JSON.parse(data);
+
+
+						$('.watchful_validating_spinner').hide();
+
+						if (response.show_status)
+						{
+
+							$('#hidden_watchful_key').val(watchful_key);
+
+							$('.watchful_validating_unlocked').show();
+							$('.watchful_validating_locked').hide();
+							$('.watchful_validating_uncheck').hide();
+							$('.watchful_validating_check').show();
+							$('#validate_watchful').attr('disabled', true).addClass('uk-disabled');
+							$('#watchful_key').attr('disabled', true).addClass('uk-disabled uk-button-success');
+							$('.locked.uk-hidden').removeClass('uk-hidden');
+
+
+							if (response.ytp_status)
+							{
+								$('#allow_ytp').val('1');
+							}
+						}
+						else
+						{
+							$('.error_response-watchfull').html(response.message_html).show();
+							UIkit.modal('#error_response-watchfull-modal').show();
+						}
+		            }
+				});
+
+			}
+
+		})
+	});
+
 	<?php if (isset($this->stateVars->superusers)): ?>
 	setupSuperUsers = <?php echo json_encode($this->stateVars->superusers); ?>;
 	<?php endif; ?>
