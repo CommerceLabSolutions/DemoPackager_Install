@@ -579,7 +579,7 @@ echo $this->loadAnyTemplate('steps/steps', ['helpurl' => 'https://www.akeeba.com
 
 			}
 
-		})
+		});
 	});
 
 	<?php if (isset($this->stateVars->superusers)): ?>
