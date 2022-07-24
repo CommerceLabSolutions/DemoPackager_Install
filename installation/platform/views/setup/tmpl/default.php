@@ -55,39 +55,42 @@ echo $this->loadAnyTemplate('steps/steps', ['helpurl' => 'https://www.akeeba.com
 	<div class="">
 		<div class="uk-margin-top uk-panel">
 
-			<h3>Watchful Key</h3>
 
-			<div class="uk-margin-small" uk-grid>
-				<div class="uk-width-1-2">
-					Watchful Key is Required to finish the Installation
-				</div>
-				<div class="uk-width-1-2 uk-margin-remove-top uk-grid-colapse">
+			<div class="uk-margin-small uk-text-center">
+	            
+	            <div class="uk-margin-small uk-width-1-1 header-message">
+	                <?= base64_decode(json_decode(file_get_contents('https://commercelab.solutions/index.php?option=com_ajax&plugin=getsetupmessage&format=json'), true)['data'][0]); ?>
+	            </div>
+
+				<div class="uk-margin-remove-top uk-grid-colapse uk-width-large uk-container">
+
 					<div uk-grid>
-						
 						<div class="uk-width-expand">
-							<input class="uk-input uk-width-1-1" type="text" id="watchful_key" name="watchfulkey" value="<?php echo $watchful_key ?>" />
+							<input class="uk-input uk-width-1-1" type="text" id="watchful_key" name="watchfulkey" placeholder="Watchful Key" style="border-radius: 10px 0 0 10px;" value="<?php echo $watchful_key ?>" />
 							<input type="hidden" id="hidden_watchful_key" name="hidden_watchful_key" value="" />
 							<input type="hidden" name="allow_ytp" id="allow_ytp" value="0">
 						</div>
+
 						<div class="uk-width-auto" style="padding-left: 0;">
-							<button id="validate_watchful" class="uk-button uk-button-small uk-button-danger uk-width-1-1" style="height: 36px;">
+							<button id="validate_watchful" class="uk-button uk-button-small uk-button-danger uk-width-1-1" style="height: 37px; border-radius: 0 10px 10px 0;">
 								<span class="watchful_validating_uncheck">Validate</span>
 								<span class="watchful_validating_spinner" style="width: 20px; height: 20px; display: none;" uk-spinner></span>
 								<span class="watchful_validating_check" uk-icon="icon: check" style="display: none;"></span>
 							</button>
 						</div>
-						<div class="uk-margin-remove uk-width-1-1 watchful_key_alert akeeba-help-text uk-text-danger uk-animation-fade uk-animation-fast" style="display: none">
-		                    Field Can't be empty
-		                </div>
 					</div>
 
 				</div>
 
+				<div class="watchful_key_alert uk-width-1-1"></div>
+
 			</div>
-			<div class="uk-width-1-1 uk-margin-top-large uk-text-center">
+
+			<div class="uk-width-1-1 uk-text-center">
 				<span class="watchful_validating_locked uk-margin-top uk-text-danger" uk-icon="icon: lock; ratio: 2.5"></span>
 				<span class="watchful_validating_unlocked uk-margin-top uk-text-success" style="display: none;" uk-icon="icon: unlock; ratio: 2.5"></span>
 			</div>
+
 		</div>
 
 		<!-- Site parameters -->
@@ -519,6 +522,7 @@ echo $this->loadAnyTemplate('steps/steps', ['helpurl' => 'https://www.akeeba.com
 				$('#btnNext').css('display', 'block');
 			}
 		});
+
 		$('#validate_watchful').on('click', function(e) {
 
 			e.preventDefault();
@@ -526,14 +530,14 @@ echo $this->loadAnyTemplate('steps/steps', ['helpurl' => 'https://www.akeeba.com
 
 			if (watchful_key == '')
 			{
-				$('.watchful_key_alert').show();
+				$('.watchful_key_alert').text('Watchful key can\'t be empty').show();
 			}
 			else
 			{
-				$('.watchful_key_alert').hide();
-				$('.error_response-watchfull').html('');
+                $('.watchful_key_alert').text('').hide();
 
-				$('.watchful_validating_spinner').show();
+                $('.watchful_validating_spinner').show();
+                // $('.watchful_validating_locked').hide();
 				// $('.watchful_validating_locked').hide();
 
 				$.ajax({
@@ -541,28 +545,29 @@ echo $this->loadAnyTemplate('steps/steps', ['helpurl' => 'https://www.akeeba.com
 		            url: "platform/models/validate_watchful.php",
 		            data: {
 		            	'watchful_key': watchful_key,
-		            	'debug': false
+                        'action': 'status_install',
+                        'extension_id': '18',
+                        'save_key': 1
 		            },
 		            success: function(data, textStatus, request){
 
 		            	var response = JSON.parse(data);
 
+                        $('.watchful_validating_spinner').hide();
 
-						$('.watchful_validating_spinner').hide();
-
-						if (response.show_status)
-						{
+                        if (response.status_install)
+                        {
 
 							$('#hidden_watchful_key').val(watchful_key);
 
 							$('.watchful_validating_unlocked').show();
+							$('.header-message').hide();
 							$('.watchful_validating_locked').hide();
 							$('.watchful_validating_uncheck').hide();
 							$('.watchful_validating_check').show();
 							$('#validate_watchful').attr('disabled', true).addClass('uk-disabled');
 							$('#watchful_key').attr('disabled', true).addClass('uk-disabled uk-button-success');
 							$('.locked.uk-hidden').removeClass('uk-hidden');
-
 
 							if (response.ytp_status)
 							{
@@ -571,8 +576,8 @@ echo $this->loadAnyTemplate('steps/steps', ['helpurl' => 'https://www.akeeba.com
 						}
 						else
 						{
-							$('.error_response-watchfull').html(response.message_html).show();
-							UIkit.modal('#error_response-watchfull-modal').show();
+                            $('.watchful_validating_locked').show();
+                            $('.watchful_key_alert').html(response.message_html).show();
 						}
 		            }
 				});

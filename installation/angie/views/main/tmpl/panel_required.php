@@ -29,9 +29,9 @@
 					<?php endif; ?>
 				</div>
 				<div class="uk-width-auto">
-						<span class="akeeba-label--<?php echo $option['current'] ? 'success' : 'failure'; ?>">
-							<?php echo $option['current'] ? AText::_('GENERIC_LBL_YES') : AText::_('GENERIC_LBL_NO'); ?>
-						</span>
+					<span class="akeeba-label--<?php echo $option['current'] ? 'success' : 'failure'; ?>">
+						<?php echo $option['current'] ? AText::_('GENERIC_LBL_YES') : AText::_('GENERIC_LBL_NO'); ?>
+					</span>
 				</div>
 			</div>
 		<?php endforeach; ?>

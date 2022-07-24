@@ -18,13 +18,14 @@ $domain    = $_SERVER['HTTP_HOST'];
 $ip        = file_get_contents('https://api.ipify.org');
 $localhost = (gethostbyname($_SERVER['HTTP_HOST']) == '127.0.0.1') ? '1' : '0';
 
-$get_queries = "watchful_key=$watchful_key&domain=$domain&ip=$ip&extension_id=$extension_id";
+$get_queries = "watchful_key=$watchful_key&domain=$domain&ip=$ip&extension_id=$extension_id&localhost=$localhost&action=status_install";
 if ($debug)
 {
 	$get_queries .= '&debug=1';
 }
 
-$url = "https://commercelab.solutions/index.php?option=com_ajax&plugin=validatewatchfull&format=json&$get_queries&localhost=$localhost";
+
+$url = "https://commercelab.solutions/index.php?option=com_ajax&plugin=validatewatchfull&format=json&$get_queries";
 
 $response = json_decode(file_get_contents($url), true)['data'][0];
 
@@ -34,14 +35,5 @@ if ($response['message_html'] != '')
 	$response['message_html'] = base64_decode($response['message_html']);
 }
 
-if ($response['message_modal'] != '')
-{
-	$response['message_modal'] = base64_decode($response['message_modal']);
-}
-
-if ()
-{
-	$this->container->session->get('jversion', '1.5.0');
-}
 
 echo json_encode($response);

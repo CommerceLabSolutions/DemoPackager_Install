@@ -55,24 +55,8 @@ class AngieModelJoomlaMain extends AngieModelBaseMain
 
 		if (empty($phpOptions))
 		{
-			$jVersion = $this->container->session->get('jversion');
 
-			if (version_compare($jVersion, '3.0.0', 'lt'))
-			{
-				$minPHPVersion = '5.2.4';
-			}
-			elseif (version_compare($jVersion, '3.2.0', 'lt'))
-			{
-				$minPHPVersion = '5.2.4';
-			}
-			elseif (version_compare($jVersion, '4.0.0', 'lt'))
-			{
-				$minPHPVersion = '5.3.1';
-			}
-			else
-			{
-				$minPHPVersion = '7.2.0';
-			}
+			$minPHPVersion = '7.4.0';
 
 			$phpOptions[] = array (
 				'label'		=> AText::sprintf('MAIN_LBL_REQ_PHP_VERSION', $minPHPVersion),
@@ -80,20 +64,11 @@ class AngieModelJoomlaMain extends AngieModelBaseMain
 				'warning'	=> false,
 			);
 
-			if(version_compare($jVersion, '3.0.0', 'gt'))
-			{
-				$phpOptions[] = array (
-					'label'		=> AText::_('MAIN_LBL_REQ_MCGPCOFF'),
-					'current'	=> (ini_get('magic_quotes_gpc') == false),
-					'warning'	=> false,
-				);
-
-				$phpOptions[] = array (
-					'label'		=> AText::_('MAIN_LBL_REQ_REGGLOBALS'),
-					'current'	=> (ini_get('register_globals') == false),
-					'warning'	=> false,
-				);
-			}
+			$phpOptions[] = array (
+				'label'		=> 'intl - Internationalization Functions',
+				'current'	=> extension_loaded('intl'),
+				'warning'	=> false,
+			);
 
 			$phpOptions[] = array (
 				'label'		=> AText::_('MAIN_LBL_REQ_ZLIB'),
