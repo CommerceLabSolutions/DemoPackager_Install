@@ -631,7 +631,8 @@ class AngieModelJoomlaSetup extends AngieModelBaseSetup
 
 		// Fields to update.
 		$fields = array(
-		    $db->quoteName('created_by') . ' = '. $new_admin_id
+		    $db->quoteName('created_by') . ' = '. $new_admin_id,
+		    $db->quoteName('modified_by') . ' = '. $new_admin_id
 		);
 
 		$query->update($db->quoteName('#__content'))->set($fields);
