@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.0" type="plugin" group="system" method="upgrade">
+    <name>Menu Pro Element</name>
+    <version>1.0.0</version>
+    <creationDate>November 2022</creationDate>
+    <author>Cloud Chief - CommerceLab\Shop</author>
+    <authorEmail>Info@commercelab.solutions</authorEmail>
+    <authorUrl>https://Commercelab.solutions</authorUrl>
+    <license>GNU General Public License version 2 or later</license>
+    <copyright>Copyright (C) 2021 Cloud Chief - CommerceLab\Shop. All rights reserved.</copyright>
+    <description>System Plugin to Support the Advance Menu element System</description>
+    <files>
+        <filename plugin="menu_pro_element">menu_pro_element.php</filename>
+        <folder>modules</folder>
+    </files>
+    <config>
+       
+    </config>
+</extension>
