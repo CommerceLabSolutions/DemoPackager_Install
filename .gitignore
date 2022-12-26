@@ -13,8 +13,6 @@
 /layouts/
 /language/
 /includes/
-/installation1/
-/phpmyadmin/
 /images/
 /dist/
 /cli/
@@ -26,7 +24,6 @@
 /templates/
 /components/
 /administrator/
-
 !/modules/
 /modules/*
 
