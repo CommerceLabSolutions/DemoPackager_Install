@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<extension type="package" version="3.2" method="upgrade">
+    <name>CommerceLab\Shop Menu element</name>
+    <author>Cloud Chief</author>
+    <creationDate>Novmber 2022</creationDate>
+    <packagename>CommerceLab\Shop_menuele</packagename>
+    <version>1.0.0</version>
+    <copyright>Copyright (C) 2021 Cloud Chief</copyright>
+    <license>http://www.gnu.org/licenses/gpl.html GNU/GPL</license>
+    <authorEmail>Info@commercelab.solutions</authorEmail>
+    <authorUrl>https://Commercelab.solutions</authorUrl>
+    <description>
+        <![CDATA[
+        <h1>CommerceLab\Shop Menu Element System (1.0.0)</h1>
+		<div style="clear: both;"></div>
+		<p>CommerceLab\Shop Menu Element - An advanced ecommerce Tree system</p>
+		<p>Visit https://Commercelab.solutions for more info</p>
+	]]>
+    </description>
+    <files folder="packages">
+        <file type="plugin" id="commercelab_menuele" group="system">plg_system_commercelab_menuele.zip</file>
+        <file type="plugin" id="commercelab_menuele_content" group="content">plg_content_commercelab_menuele.zip</file>
+    </files>
+    <scriptfile>script.php</scriptfile>
+</extension>

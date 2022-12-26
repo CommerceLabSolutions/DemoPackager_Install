@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="4.0" method="upgrade">
+    <name>com_user_pro</name>
+    <creationDate>2022-11-02</creationDate>
+    <copyright></copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <author></author>
+    <authorEmail></authorEmail>
+    <authorUrl>http://</authorUrl>
+    <version>CVS: 1.0.0</version>
+    <description>COM_USER_PRO_XML_DESCRIPTION</description>
+    <namespace path="src">Userpro\Component\User_pro</namespace>
+    
+    
+    
+    <install> <!-- Runs on install -->
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    <update> <!-- Runs on update -->
+        <schemas>
+            <schemapath type="mysql">sql/updates</schemapath>
+        </schemas>
+    </update>
+    <uninstall> <!-- Runs on uninstall -->
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+
+    
+
+    <files folder="site">
+        <folder>src</folder>
+        <folder>forms</folder>
+        <folder>tmpl</folder>
+    </files>
+    <media destination="com_user_pro" folder="media">
+        <folder>css</folder>
+        <folder>js</folder>
+        <filename>joomla.asset.json</filename>
+    </media>
+    <languages folder="site/languages">
+        
+			<language tag="en-GB">en-GB/com_user_pro.ini</language>
+    </languages>
+    <administration>
+        <menu>COM_USER_PRO</menu>
+        <submenu>
+            <menu link="option=com_user_pro&amp;view=dashboard" view="dashboard" alt="User_pro/Users">COM_USER_PRO_TITLE_DASHBOARD</menu>
+
+            <menu link="option=com_user_pro&amp;view=fieldapprovals" view="fieldapprovals" alt="User_pro/fieldapprovals">COM_USER_PRO_TITLE_FIELDAPPROVALS</menu>
+
+            <menu link="option=com_user_pro&amp;view=setting" view="setting" alt="User_pro/Users">COM_USER_PRO_TITLE_SETTING</menu>
+
+			<menu link="option=com_user_pro&amp;view=users" view="users" alt="User_pro/Users">COM_USER_PRO_TITLE_USERS</menu>
+
+            <menu link="option=com_fields&amp;view=groups&amp;context=com_users.user">COM_USER_PRO_TITLE_USER_FIELD_GROUP</menu>
+
+            <menu link="option=com_fields&amp;view=fields&amp;context=com_users.user">COM_USER_PRO_TITLE_USER_FIELD</menu>
+
+            <menu link="option=com_users&amp;view=groups">COM_USER_PRO_TITLE_USER_GROUPS</menu>
+
+            <menu link="option=com_users&amp;view=levels">COM_USER_PRO_TITLE_USER_ACCESS_LEVELS</menu>
+
+            <menu link="option=com_config&amp;view=component&amp;component=com_user_pro" alt="User_pro/Users">COM_USER_PRO_TITLE_USER_CONFIGURATION</menu>
+
+        </submenu>
+        <files folder="administrator">
+            <filename>access.xml</filename>
+            <filename>config.xml</filename>
+            <folder>forms</folder>
+            <folder>src</folder>
+            <folder>tmpl</folder>
+            <folder>services</folder>
+            <folder>presets</folder>
+            <folder>sql</folder>
+        </files>
+        <languages folder="administrator/languages">
+            
+			<language tag="en-GB">en-GB/com_user_pro.ini</language>
+			<language tag="en-GB">en-GB/com_user_pro.sys.ini</language>
+        </languages>
+    </administration>
+    <config>
+        <fields name="params">
+            <fieldset name="component">
+                <field name="save_history" default="0" />
+            </fieldset>
+        </fields>
+    </config>
+    <plugins>
+    </plugins>
+</extension>

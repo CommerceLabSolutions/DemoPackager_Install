@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<extension type="package" version="3.2" method="upgrade">
+    <name>Advance Menu</name>
+    <author>Cloud Chief</author>
+    <creationDate>Novmber 2022</creationDate>
+    <packagename>menu_element</packagename>
+    <version>1.0.0</version>
+    <copyright>Copyright (C) 2021 Cloud Chief</copyright>
+    <license>http://www.gnu.org/licenses/gpl.html GNU/GPL</license>
+    <authorEmail>Info@commercelab.solutions</authorEmail>
+    <authorUrl>https://Commercelab.solutions</authorUrl>
+    <description>
+        <![CDATA[
+        <h1>Advance Menu Element System (1.0.0)</h1>
+		<div style="clear: both;"></div>
+		<p>Advance Menu Element - An advanced ecommerce Tree system</p>
+		<p>Visit https://Commercelab.solutions for more info</p>
+	]]>
+    </description>
+    <files folder="packages">
+        <file type="plugin" id="advance_menu_element" group="system">plg_system_advance_menu_element.zip</file>
+    </files>
+    <scriptfile>script.php</scriptfile>
+</extension>
