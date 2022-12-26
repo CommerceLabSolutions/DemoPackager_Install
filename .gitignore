@@ -22,8 +22,20 @@
 /media/
 /libraries/
 /templates/
-/components/
-/administrator/
+!/components/
+/components/*
+!/components/com_user_pro/
+!/administrator/
+/administrator/*
+
+!/administrator/components/
+/administrator/components/*
+
+!/administrator/language/
+/administrator/language/*
+!/administrator/language/en-GB/
+/administrator/language/en-GB/*
+
 !/modules/
 /modules/*
 
